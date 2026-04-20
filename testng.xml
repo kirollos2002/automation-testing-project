@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="EYOUTH Automation Suite" verbose="1">
+
+    <test name="Search Tests">
+        <classes>
+            <class name="tests.TC01_SearchTest"/>
+        </classes>
+    </test>
+
+    <test name="Course Tests">
+        <classes>
+            <class name="tests.TC02_CourseDetailsTest"/>
+            <class name="tests.TC11_CourseCardUITest"/>
+        </classes>
+    </test>
+
+    <test name="Registration Tests">
+        <classes>
+            <class name="tests.TC03_RegistrationPageTest"/>
+            <class name="tests.TC04_RegisterEmptyUsernameTest"/>
+        </classes>
+    </test>
+
+    <test name="End to End Tests">
+        <classes>
+            <class name="tests.TC07_EndToEndTest"/>
+        </classes>
+    </test>
+
+    <test name="Login Tests">
+        <classes>
+            <class name="tests.TC05_LoginInvalidCredentialsTest"/>
+            <class name="tests.TC06_LoginEmptyFieldsTest"/>
+        </classes>
+    </test>
+
+    <test name="Footer Social Links Tests">
+        <classes>
+            <class name="tests.TC08_FacebookLinkTest"/>
+            <class name="tests.TC09_LinkedInLinkTest"/>
+            <class name="tests.TC10_YouTubeLinkTest"/>
+        </classes>
+    </test>
+
+</suite>

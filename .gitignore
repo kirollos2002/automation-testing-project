@@ -2,5 +2,6 @@ target/
 *.class
 *.log
 allure-results/
+allure-report/
 .idea/
 *.iml

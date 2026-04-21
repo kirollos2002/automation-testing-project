@@ -1,23 +1,15 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
 public class CartPage extends BasePage {
 
-    @FindBy(css = ".cart-item, .my-course, .enrolled-course, .course-card")
-    private List<WebElement> cartItems;
-
-    @FindBy(css = ".cart-item .course-title, .my-course .title, .enrolled-course h3")
-    private List<WebElement> cartItemTitles;
-
     public CartPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
     }
 
     public void open(String url) {
@@ -25,6 +17,7 @@ public class CartPage extends BasePage {
     }
 
     public boolean isCourseInCart(String courseTitle) {
+        List<WebElement> cartItemTitles = driver.findElements(By.cssSelector(".cart-item .course-title, .my-course .title, .enrolled-course h3"));
         for (WebElement item : cartItemTitles) {
             if (item.getText().contains(courseTitle)) {
                 return true;
@@ -34,6 +27,7 @@ public class CartPage extends BasePage {
     }
 
     public boolean cartIsNotEmpty() {
+        List<WebElement> cartItems = driver.findElements(By.cssSelector(".cart-item, .my-course, .enrolled-course, .course-card"));
         return !cartItems.isEmpty();
     }
 }

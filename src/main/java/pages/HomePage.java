@@ -1,41 +1,15 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import java.time.Duration;
 
 public class HomePage extends BasePage {
 
-    @FindBy(css = "input[type='search']")
-    private WebElement searchInput;
-
-    @FindBy(css = "a[href='/ar/courses'].font-light, a[href='/ar/courses']")
-    private WebElement allCoursesLink;
-
-    @FindBy(css = "a[href='/ar/auth/register']")
-    private WebElement joinUsLink;
-
-    @FindBy(css = "a[href='/ar/auth/login']")
-    private WebElement loginLink;
-
-    @FindBy(css = "a[href*='facebook.com']")
-    private WebElement facebookLink;
-
-    @FindBy(css = "a[href*='linkedin.com']")
-    private WebElement linkedInLink;
-
-    @FindBy(css = "a[href*='youtube.com']")
-    private WebElement youTubeLink;
-
     public HomePage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
     }
 
     public void open(String url) {
@@ -44,6 +18,7 @@ public class HomePage extends BasePage {
     }
 
     public void searchFor(String keyword) {
+        WebElement searchInput = driver.findElement(By.cssSelector("input[type='search']"));
         waitForVisible(searchInput).clear();
         searchInput.sendKeys(keyword);
         searchInput.sendKeys(Keys.ENTER);
@@ -56,27 +31,32 @@ public class HomePage extends BasePage {
     }
 
     public void clickJoinUs() {
+        WebElement joinUsLink = driver.findElement(By.cssSelector("a[href='/ar/auth/register']"));
         waitForClickable(joinUsLink).click();
         waitForPageLoad();
     }
 
     public void clickLogin() {
+        WebElement loginLink = driver.findElement(By.cssSelector("a[href='/ar/auth/login']"));
         waitForClickable(loginLink).click();
         waitForPageLoad();
     }
 
     public void clickFacebookLink() {
         scrollToFooter();
+        WebElement facebookLink = driver.findElement(By.cssSelector("a[href*='facebook.com']"));
         jsClick(facebookLink);
     }
 
     public void clickLinkedInLink() {
         scrollToFooter();
+        WebElement linkedInLink = driver.findElement(By.cssSelector("a[href*='linkedin.com']"));
         jsClick(linkedInLink);
     }
 
     public void clickYouTubeLink() {
         scrollToFooter();
+        WebElement youTubeLink = driver.findElement(By.cssSelector("a[href*='youtube.com']"));
         jsClick(youTubeLink);
     }
 

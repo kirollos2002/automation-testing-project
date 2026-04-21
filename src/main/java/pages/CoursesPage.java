@@ -1,41 +1,22 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
 public class CoursesPage extends BasePage {
 
-    @FindBy(css = "div[class*='rounded-2xl']")
-    private List<WebElement> courseCards;
-
-    @FindBy(css = "div[class*='rounded-2xl'] img[class*='object-cover']")
-    private List<WebElement> courseImages;
-
-    @FindBy(css = "div[class*='rounded-2xl'] h3")
-    private List<WebElement> courseTitles;
-
-    @FindBy(css = "div[class*='rounded-2xl'] h6")
-    private List<WebElement> instructorNames;
-
-    @FindBy(css = "div[class*='rounded-2xl'] button[class*='bg-mainBlue']")
-    private List<WebElement> subscribeButtons;
-
-    @FindBy(css = "a[href^='/ar/courses/']")
-    private List<WebElement> courseCardLinks;
-
     public CoursesPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
     }
 
     public boolean hasCourseCards() {
         try {
-            wait.until(d -> !courseCards.isEmpty());
+            List<WebElement> courseCards = driver.findElements(By.cssSelector("div[class*='rounded-2xl']"));
+            wait.until(d -> !driver.findElements(By.cssSelector("div[class*='rounded-2xl']")).isEmpty());
             return !courseCards.isEmpty();
         } catch (Exception e) {
             return false;
@@ -43,15 +24,17 @@ public class CoursesPage extends BasePage {
     }
 
     public void clickFirstCourse() {
-        waitForVisible(courseCardLinks.get(0));
-        courseCardLinks.get(0).click();
+        WebElement firstLink = driver.findElements(By.cssSelector("a[href^='/ar/courses/']")).get(0);
+        waitForVisible(firstLink);
+        firstLink.click();
         waitForPageLoad();
     }
 
     public boolean firstCardHasImage() {
         try {
-            waitForVisible(courseImages.get(0));
-            return courseImages.get(0).isDisplayed();
+            WebElement image = driver.findElements(By.cssSelector("div[class*='rounded-2xl'] img[class*='object-cover']")).get(0);
+            waitForVisible(image);
+            return image.isDisplayed();
         } catch (Exception e) {
             return false;
         }
@@ -59,8 +42,9 @@ public class CoursesPage extends BasePage {
 
     public boolean firstCardHasTitle() {
         try {
-            waitForVisible(courseTitles.get(0));
-            return !courseTitles.get(0).getText().trim().isEmpty();
+            WebElement title = driver.findElements(By.cssSelector("div[class*='rounded-2xl'] h3")).get(0);
+            waitForVisible(title);
+            return !title.getText().trim().isEmpty();
         } catch (Exception e) {
             return false;
         }
@@ -68,8 +52,9 @@ public class CoursesPage extends BasePage {
 
     public boolean firstCardHasInstructorName() {
         try {
-            waitForVisible(instructorNames.get(0));
-            return !instructorNames.get(0).getText().trim().isEmpty();
+            WebElement instructor = driver.findElements(By.cssSelector("div[class*='rounded-2xl'] h6")).get(0);
+            waitForVisible(instructor);
+            return !instructor.getText().trim().isEmpty();
         } catch (Exception e) {
             return false;
         }
@@ -77,24 +62,27 @@ public class CoursesPage extends BasePage {
 
     public boolean firstCardHasSubscribeButton() {
         try {
-            waitForVisible(subscribeButtons.get(0));
-            return subscribeButtons.get(0).isDisplayed();
+            WebElement subscribeButton = driver.findElements(By.cssSelector("div[class*='rounded-2xl'] button[class*='bg-mainBlue']")).get(0);
+            waitForVisible(subscribeButton);
+            return subscribeButton.isDisplayed();
         } catch (Exception e) {
             return false;
         }
     }
 
     public void subscribeToFirstCourse() {
-        waitForClickable(subscribeButtons.get(0));
+        WebElement subscribeButton = driver.findElements(By.cssSelector("div[class*='rounded-2xl'] button[class*='bg-mainBlue']")).get(0);
+        waitForClickable(subscribeButton);
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].click();", subscribeButtons.get(0));
+        js.executeScript("arguments[0].click();", subscribeButton);
         waitForPageLoad();
     }
 
     public String getFirstCourseTitle() {
         try {
-            waitForVisible(courseTitles.get(0));
-            return courseTitles.get(0).getText().trim();
+            WebElement title = driver.findElements(By.cssSelector("div[class*='rounded-2xl'] h3")).get(0);
+            waitForVisible(title);
+            return title.getText().trim();
         } catch (Exception e) {
             return "";
         }

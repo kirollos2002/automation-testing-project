@@ -1,37 +1,14 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 public class RegisterPage extends BasePage {
 
-    @FindBy(id = "name")
-    private WebElement fullNameField;
-
-    @FindBy(id = "email")
-    private WebElement emailField;
-
-    @FindBy(id = "phone")
-    private WebElement phoneField;
-
-    @FindBy(id = "password")
-    private WebElement passwordField;
-
-    @FindBy(id = "confirm_password")
-    private WebElement confirmPasswordField;
-
-    @FindBy(css = "button[type='submit'], button[class*='bg-mainBlue']")
-    private WebElement createButton;
-
-    @FindBy(css = "[class*='text-red'], [class*='text-destructive'], p[class*='text-sm'], [role='alert']")
-    private WebElement validationError;
-
     public RegisterPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, this);
     }
 
     public void open(String url) {
@@ -40,18 +17,23 @@ public class RegisterPage extends BasePage {
     }
 
     public void fillFormWithoutFullName(String email, String password) {
+        WebElement emailField = driver.findElement(By.id("email"));
         waitForVisible(emailField);
         type(emailField, email);
         try {
+            WebElement phoneField = driver.findElement(By.id("phone"));
             type(phoneField, "01012345678");
         } catch (Exception ignored) {}
+        WebElement passwordField = driver.findElement(By.id("password"));
         type(passwordField, password);
         try {
+            WebElement confirmPasswordField = driver.findElement(By.id("confirm_password"));
             type(confirmPasswordField, password);
         } catch (Exception ignored) {}
     }
 
     public void clickCreate() {
+        WebElement createButton = driver.findElement(By.cssSelector("button[type='submit']"));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", waitForVisible(createButton));
         try { Thread.sleep(500); } catch (InterruptedException ignored) {}
@@ -61,6 +43,7 @@ public class RegisterPage extends BasePage {
 
     public boolean isValidationErrorDisplayed() {
         try {
+            WebElement validationError = driver.findElement(By.cssSelector("[class*='text-red'], [class*='text-destructive'], p[class*='text-sm'], [role='alert']"));
             return waitForVisible(validationError).isDisplayed();
         } catch (Exception e) {
             return driver.getPageSource().contains("text-red") ||
@@ -71,6 +54,7 @@ public class RegisterPage extends BasePage {
 
     public String getValidationErrorText() {
         try {
+            WebElement validationError = driver.findElement(By.cssSelector("[class*='text-red'], [class*='text-destructive'], p[class*='text-sm'], [role='alert']"));
             return waitForVisible(validationError).getText();
         } catch (Exception e) {
             return "";
